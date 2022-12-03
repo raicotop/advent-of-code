@@ -9,21 +9,20 @@
 
 (defn sol1
   [in]
-  (->> (map #(split-at (/ (count %) 2) %) in)
-       (map (fn [[a b]] (clojure.set/intersection (set a) (set b))))))
+  (map #(split-at (/ (count %) 2) %) in))
 
 (defn sol2
   [in]
   (->> (map frequencies in)
        (map keys)
-       (partition 3)
-       (map #(reduce clojure.set/intersection (map set %)))))
+       (partition 3)))
 
 (defn sol
   [f]
   (->> (slurp "2022/day03.txt")
        (clojure.string/split-lines)
        (f)
+       (map #(reduce clojure.set/intersection (map set %)))
        (map #((comp score first) %))
        (reduce +)))
 
